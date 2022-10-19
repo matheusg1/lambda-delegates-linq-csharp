@@ -5,7 +5,6 @@ using lambda_delegates_linq.Services;
 
 namespace lambda_delegates_linq
 {
-    delegate void BinaryNumericOperation(double n1, double n2); //type safety
     class Program
     {
         static void Main(string[] args)
@@ -17,10 +16,18 @@ namespace lambda_delegates_linq
             list.Add(new Product("HD Case", 80.90));
 
             list.RemoveAll(p => p.Price >= 100);
-            foreach(Product p in list)
+
+            list.RemoveAll(ProductTest);//Equivalente
+
+            foreach (Product p in list)
             {
                 Console.WriteLine(p);
             }
+        }
+       
+        public static bool ProductTest(Product p)
+        {
+            return p.Price >= 100.0;
         }
     }
 }
