@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using lambda_delegates_linq.Entities;
-using lambda_delegates_linq.Services;
 
 namespace lambda_delegates_linq
 {
@@ -10,30 +7,23 @@ namespace lambda_delegates_linq
     {
         static void Main(string[] args)
         {
-            List<Product> list = new List<Product>();
-            list.Add(new Product("Tv", 900.00));
-            list.Add(new Product("Mouse", 50.00));
-            list.Add(new Product("Tablet", 350.50));
-            list.Add(new Product("HD Case", 80.90));
+            //Data source
+            int[] numbers = new int[] { 2, 3, 4, 5 };
 
-            Func<Product, string> func = p => p.Name.ToUpper();
+            //Definir a query
+            var result = numbers.Where(x => x % 2 == 0).Select(x=> x *= 10); //IEnumerable, caso necessário usar .ToList()
 
-            //Func<Product, string> func =  p => { return p.Name.ToUpper(); };  //Outra forma, caso use chaves é necessario usar "return"
-            //Func<Product, string> func = NameUpper; //<Product, string> Recebe Product, retorna string
+            /*
+             var result = numbers
+                .Where(x => x % 2 == 0)
+                .Select(x => x *= 10); //outra forma de organizar
+            */
 
-            List<string> result = list.Select(func).ToList();
-            //List<string> result = list.Select(NameUpper).ToList(); //Segunda forma, com funções
-            //List<string> result = list.Select(p => p.Name.ToUpper()).ToList(); //outra forma
-
-            list.ForEach(p => Console.WriteLine(p.Name));
-            Console.WriteLine();
-            result.ForEach(p => Console.WriteLine(p));
-
-        }
-
-        static string NameUpper(Product p)
-        {
-            return p.Name.ToUpper();
+            //Executa a query
+            foreach (int item in result)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
