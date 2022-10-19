@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using lambda_delegates_linq.Entities;
 using lambda_delegates_linq.Services;
 
@@ -15,24 +16,24 @@ namespace lambda_delegates_linq
             list.Add(new Product("Tablet", 350.50));
             list.Add(new Product("HD Case", 80.90));
 
+            Func<Product, string> func = p => p.Name.ToUpper();
 
-            Action<Product> act = (p => p.Price += p.Price * 0.1);
-            Action<Product> act2 = p => { p.Price += p.Price * 0.1; }; //outra formatação
+            //Func<Product, string> func =  p => { return p.Name.ToUpper(); };  //Outra forma, caso use chaves é necessario usar "return"
+            //Func<Product, string> func = NameUpper; //<Product, string> Recebe Product, retorna string
 
-            list.ForEach(act);
-            //list.ForEach(UpdatePrice);  //segunda forma, com funções
-            //list.ForEach(p => p.Price += p.Price * 0.1); //terceira forma, com expressão lambda
+            List<string> result = list.Select(func).ToList();
+            //List<string> result = list.Select(NameUpper).ToList(); //Segunda forma, com funções
+            //List<string> result = list.Select(p => p.Name.ToUpper()).ToList(); //outra forma
 
-            foreach (Product p in list)
-            {
-                Console.WriteLine(p);
-            }
+            list.ForEach(p => Console.WriteLine(p.Name));
+            Console.WriteLine();
+            result.ForEach(p => Console.WriteLine(p));
 
         }
 
-        static void UpdatePrice(Product p)
+        static string NameUpper(Product p)
         {
-            p.Price += p.Price * 0.1;
+            return p.Name.ToUpper();
         }
     }
 }
