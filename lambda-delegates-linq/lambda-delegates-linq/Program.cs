@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using lambda_delegates_linq.Entities;
 using lambda_delegates_linq.Services;
 
 namespace lambda_delegates_linq
@@ -8,13 +10,17 @@ namespace lambda_delegates_linq
     {
         static void Main(string[] args)
         {
-            double a = 10;
-            double b = 12;
-            
-            BinaryNumericOperation op = CalculationService.ShowSum;
-            op += CalculationService.ShowMax;
+            List<Product> list = new List<Product>();
+            list.Add(new Product("Tv", 900.00));
+            list.Add(new Product("Mouse", 50.00));
+            list.Add(new Product("Tablet", 350.50));
+            list.Add(new Product("HD Case", 80.90));
 
-            op.Invoke(a, b);    //Chama as funções que foram atribuídas ao BNO, em ordem
+            list.RemoveAll(p => p.Price >= 100);
+            foreach(Product p in list)
+            {
+                Console.WriteLine(p);
+            }
         }
     }
 }
